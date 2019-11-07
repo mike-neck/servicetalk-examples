@@ -19,12 +19,20 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         HttpServers.forPort(8080)
-                .listenAndAwait((ctx, request, responseFactory) -> {
-                    Iterable<String> names = request.queryParameters("name");
-                    String message = StreamSupport.stream(names.spliterator(), false)
-                            .collect(Collectors.joining(", ", "Hello, ", "."));
-                    logger.info("message: {}", message);
-                    return Single.succeeded(responseFactory.ok().setHeader("Content-Type", "plain/text").payloadBody(message, textSerializer()));
-                }).awaitShutdown();
+                .listenAndAwait((ctx, request, responseFactory) ->
+                        hello(request, responseFactory))
+                .awaitShutdown();
+    }
+
+    private static Single<HttpResponse> hello(HttpRequest request, HttpResponseFactory responseFactory) {
+        Iterable<String> names = request.queryParameters("name");
+        String message = StreamSupport.stream(names.spliterator(), false)
+                .collect(Collectors.joining(", ", "Hello, ", "."));
+        logger.info("message: {}", message);
+        return Single.succeeded(
+                responseFactory
+                        .ok()
+                        .setHeader("Content-Type", "plain/text")
+                        .payloadBody(message, textSerializer()));
     }
 }
