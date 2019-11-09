@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'graal'
+}
+
+repositories {
+    jcenter()
+    maven {
+        url "https://dl.bintray.com/servicetalk/servicetalk/"
+    }
+}
+
+dependencies {
+    implementation(
+            "org.slf4j:slf4j-api:1.7.28",
+            "io.servicetalk:servicetalk-http-netty:0.19.0",
+            "io.servicetalk:servicetalk-annotations:0.19.0",
+            "ch.qos.logback:logback-classic:1.2.3",
+    )
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
+}
+
+application {
+    mainClassName = "com.example.App"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+graal {
+    mainClass = 'com.example.App'
+    graalVmHome = '/Users/mike/.sdkman/candidates/java/19.2.1-grl'
+    executableName = 'servicetalk-app'
+    addArguments(
+            '--initialize-at-run-time=io.netty.handler.ssl.ReferenceCountedOpenSslContext',
+            '--initialize-at-run-time=io.netty.util.internal.logging.Log4JLogger',
+    )
+}
