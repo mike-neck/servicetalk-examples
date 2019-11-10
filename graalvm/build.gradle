@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'graal'
+    id 'org.mikeneck.graalvm-native-image' version '0.1.1'
 }
 
 repositories {
@@ -30,12 +30,15 @@ test {
     useJUnitPlatform()
 }
 
-graal {
+nativeImage {
     mainClass = 'com.example.App'
-    graalVmHome = '/Users/mike/.sdkman/candidates/java/19.2.1-grl'
+    graalVmHome = System.getProperty('java.home')
     executableName = 'servicetalk-app'
-    addArguments(
+    arguments(
             '--initialize-at-run-time=io.netty.handler.ssl.ReferenceCountedOpenSslContext',
             '--initialize-at-run-time=io.netty.util.internal.logging.Log4JLogger',
+            '--initialize-at-run-time=io.netty.handler.ssl.JdkNpnApplicationProtocolNegotiator',
+            '-H:+TraceClassInitialization',
+            '--allow-incomplete-classpath',
     )
 }
