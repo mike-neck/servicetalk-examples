@@ -13,7 +13,6 @@ import io.servicetalk.http.api.HttpSerializationProvider;
 import io.servicetalk.http.api.HttpSerializationProviders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContextInitializer;
@@ -38,8 +37,5 @@ public class App implements ApplicationContextInitializer<GenericApplicationCont
                 () -> HttpSerializationProviders.jsonSerializer(new JacksonSerializationProvider()));
         applicationContext.registerBean(RunnerHandler.class);
         applicationContext.registerBean(ServiceTalkRunner.class);
-        applicationContext.registerBean(
-                CommandLineRunner.class,
-                () -> applicationContext.getBean(ServiceTalkRunner.class));
     }
 }
