@@ -74,6 +74,7 @@ public class BackendApp {
                     .payloadBody(Map.of("message", List.of("not found")), serializationProvider.serializerFor(new TypeHolder<>() {
             })));
         }
+        logger.info("path: {}, result: success, record: {}", req.path(), record);
         HttpSerializer<Record> serializer = serializationProvider.serializerFor(Record.class);
         HttpResponse response = responseFactory.ok()
                 .addHeader("Content-Type", "application/json")

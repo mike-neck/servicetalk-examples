@@ -24,7 +24,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "com.example.App"
+    mainClassName = "com.example.BackendApp"
 }
 
 test {
