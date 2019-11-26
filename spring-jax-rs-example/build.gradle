@@ -1,0 +1,37 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+ext {
+	servicetalkVersion = '0.20.0'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation (
+			'org.springframework.boot:spring-boot-starter',
+			'org.glassfish.jersey.core:jersey-server:2.29.1',
+			'org.glassfish.hk2:spring-bridge:2.6.1',
+			"io.servicetalk:servicetalk-http-netty:${servicetalkVersion}",
+			"io.servicetalk:servicetalk-annotations:${servicetalkVersion}",
+			"io.servicetalk:servicetalk-data-jackson-jersey:${servicetalkVersion}",
+			"io.servicetalk:servicetalk-http-router-jersey:${servicetalkVersion}",
+			"org.glassfish.jersey.inject:jersey-hk2:2.28",
+	)
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
