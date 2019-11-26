@@ -19,7 +19,6 @@ repositories {
 dependencies {
 	implementation (
 			'org.springframework.boot:spring-boot-starter',
-			'org.glassfish.jersey.core:jersey-server:2.29.1',
 			'org.glassfish.hk2:spring-bridge:2.6.1',
 			"io.servicetalk:servicetalk-http-netty:${servicetalkVersion}",
 			"io.servicetalk:servicetalk-annotations:${servicetalkVersion}",

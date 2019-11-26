@@ -16,7 +16,6 @@
 package com.example;
 
 import org.glassfish.hk2.api.ServiceLocator;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.jvnet.hk2.spring.bridge.api.SpringBridge;
 import org.jvnet.hk2.spring.bridge.api.SpringIntoHK2Bridge;
 import org.slf4j.Logger;
@@ -24,8 +23,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Application;
+import java.util.Set;
 
-public class JaxRsApplication extends ResourceConfig {
+public class JaxRsApplication extends Application {
 
     private static final Logger logger = LoggerFactory.getLogger(JaxRsApplication.class);
 
@@ -38,7 +39,10 @@ public class JaxRsApplication extends ResourceConfig {
         SpringBridge.getSpringBridge().initializeSpringBridge(serviceLocator);
         SpringIntoHK2Bridge springIntoHK2Bridge = serviceLocator.getService(SpringIntoHK2Bridge.class);
         springIntoHK2Bridge.bridgeSpringBeanFactory(beanFactory);
+    }
 
-        registerClasses(TimeResource.class);
+    @Override
+    public Set<Class<?>> getClasses() {
+        return Set.of(TimeResource.class);
     }
 }
